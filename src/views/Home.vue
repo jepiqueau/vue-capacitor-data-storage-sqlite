@@ -2,28 +2,33 @@
   <ion-page>
     <ion-header :translucent="true">
       <ion-toolbar>
-        <ion-title>Blank</ion-title>
+        <ion-title>Home</ion-title>
       </ion-toolbar>
     </ion-header>
     
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
+          <ion-title size="large">Home</ion-title>
         </ion-toolbar>
       </ion-header>
     
       <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+        <ion-button @click="goToAbout" full>Go to About</ion-button>
+        <ion-button @click="showDialogAlert" full>Show Alert Box</ion-button>
+        <ion-button @click="showToast" full>Show Toast</ion-button>
+        <ion-button @click="testStore" full>Test SQLite Store</ion-button>
+        <ion-button @click="testStoreTables" full>Test SQLite Store Tables</ion-button>
       </div>
     </ion-content>
   </ion-page>
 </template>
 
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
+import { useRouter } from 'vue-router';
+import { Plugins } from "@capacitor/core";
 
 export default defineComponent({
   name: 'Home',
@@ -32,20 +37,56 @@ export default defineComponent({
     IonHeader,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar,
+    IonButton
+  },
+  setup() {
+      const router = useRouter()
+      const { Toast, Modals } = Plugins;
+
+      const goToAbout = () => {
+          router.push({
+              path: '/about'
+          });
+      };
+        const showDialogAlert = async () => {
+          await Modals.alert({
+            title: "Alert",
+            message: "This is an alert message."
+          });
+        };
+        const showToast = async () => {
+          await Toast.show({
+            text: "Hello from Capacitor!",
+            duration: "short"
+          });
+        };
+        const testStore = () => {
+            router.push({
+                path: '/sqlitestore'
+            });
+        };
+        const testStoreTables = () => {
+            router.push({
+                path: '/sqlitestoretables'
+            });
+        };
+      return {
+          goToAbout, showDialogAlert, showToast, testStore, testStoreTables
+      }
   }
+
 });
 </script>
 
 <style scoped>
 #container {
-  text-align: center;
+  text-align: left;
   
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
+  position: relative;
+  left: 1%;
+  right: 1%;
+  top: 3%;
 }
 
 #container strong {

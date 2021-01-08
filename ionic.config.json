@@ -1,5 +1,5 @@
 {
-  "name": "myApp",
+  "name": "vue-capacitor-data-storage-sqlite",
   "integrations": {
     "capacitor": {}
   },
