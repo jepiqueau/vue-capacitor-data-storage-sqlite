@@ -43,5 +43,14 @@
     "vue-data-storage-sqlite-hook": "0.0.6",
     "vue-jest": "^5.0.0-0"
   },
-  "description": "An Ionic project"
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jepiqueau/vue-capacitor-data-storage-sqlite.git"
+  },
+  "author": "Jean Pierre Quéau",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jepiqueau/vue-capacitor-data-storage-sqlite/issues"
+  },
+  "homepage": "https://github.com/jepiqueau/vue-capacitor-data-storage-sqlite#readme"
 }
