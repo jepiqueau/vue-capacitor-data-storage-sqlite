@@ -4,6 +4,7 @@ import Home from '../views/Home.vue';
 import About from '../views/About.vue';
 import SQLiteStore from '../views/SQLiteStore.vue';
 import SQLiteStoreTables from '../views/SQLiteStoreTables.vue';
+import TestIssue1 from '../views/TestIssue1.vue';
 import NotFound from '../views/NotFound.vue';
 
 const routes: Array<RouteRecordRaw> = [
@@ -30,6 +31,11 @@ const routes: Array<RouteRecordRaw> = [
     path: '/sqlitestoretables',
     name: 'SQLiteStoreTables',
     component: SQLiteStoreTables
+  },
+  {
+    path: '/testissue1',
+    name: 'TestIssue1',
+    component: TestIssue1
   },
   {
     path: "/:catchAll(.*)",

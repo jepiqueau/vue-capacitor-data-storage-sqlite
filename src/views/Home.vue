@@ -19,6 +19,7 @@
         <ion-button @click="showToast" full>Show Toast</ion-button>
         <ion-button @click="testStore" full>Test SQLite Store</ion-button>
         <ion-button @click="testStoreTables" full>Test SQLite Store Tables</ion-button>
+        <ion-button @click="testIssue1" full>Test Issue1</ion-button>
       </div>
     </ion-content>
   </ion-page>
@@ -49,30 +50,36 @@ export default defineComponent({
               path: '/about'
           });
       };
-        const showDialogAlert = async () => {
-          await Modals.alert({
-            title: "Alert",
-            message: "This is an alert message."
+      const showDialogAlert = async () => {
+        await Modals.alert({
+          title: "Alert",
+          message: "This is an alert message."
+        });
+      };
+      const showToast = async () => {
+        await Toast.show({
+          text: "Hello from Capacitor!",
+          duration: "short"
+        });
+      };
+      const testStore = () => {
+          router.push({
+              path: '/sqlitestore'
           });
-        };
-        const showToast = async () => {
-          await Toast.show({
-            text: "Hello from Capacitor!",
-            duration: "short"
+      };
+      const testStoreTables = () => {
+          router.push({
+              path: '/sqlitestoretables'
           });
-        };
-        const testStore = () => {
-            router.push({
-                path: '/sqlitestore'
-            });
-        };
-        const testStoreTables = () => {
-            router.push({
-                path: '/sqlitestoretables'
-            });
-        };
+      };
+      const testIssue1 = () => {
+          router.push({
+              path: '/testissue1'
+          });
+      };
       return {
-          goToAbout, showDialogAlert, showToast, testStore, testStoreTables
+          goToAbout, showDialogAlert, showToast, testStore, testStoreTables,
+          testIssue1
       }
   }
 
