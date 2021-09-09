@@ -3,7 +3,7 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-            <ion-back-button default-href="/home"></ion-back-button>
+          <ion-button @click="() => router.push('/home')">back</ion-button>
         </ion-buttons>
         <ion-title>SQLiteStore Test</ion-title>
       </ion-toolbar>
@@ -26,9 +26,10 @@
   </ion-page>
 </template>
 <script lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonBackButton,
+import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton,
          IonButtons, IonCard, IonCardContent } from '@ionic/vue';
 import { defineComponent, getCurrentInstance, ref } from 'vue';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
   name: 'SQLiteStore',
@@ -38,7 +39,7 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
-    IonBackButton,
+    IonButton,
     IonButtons,
     IonCard,
     IonCardContent
@@ -48,15 +49,13 @@ export default defineComponent({
     const log = ref("");
     const app = getCurrentInstance();
     const storage = app?.appContext.config.globalProperties.$storage;
+    const router = useRouter();
 
     async function testSQLiteStore() {
       log.value = log.value.concat("**** Starting Test SQLite Store ****\n"); 
-      // open store
-      const resOpen = await storage.openStore({});
-      if( !resOpen ) {
-        log.value = log.value.concat(" > openStore failed \n");
-        return { log };
-      } else {
+      try {
+        // open store
+        await storage.openStore({});
         log.value = log.value.concat(" > openStore was successful \n");
         // store string
         await storage.setItem("session", "Session Opened");
@@ -144,7 +143,7 @@ export default defineComponent({
         }
         log.value = log.value.concat(" > getAllKeysValues successful \n");
         // remove a key from store
-        result = await storage.removeItem("testJson");
+        await storage.removeItem("testJson");
         result = await storage.getAllKeysValues();
         if (
           result.length !== 2 ||
@@ -158,7 +157,7 @@ export default defineComponent({
         }
         log.value = log.value.concat(" > removeItem successful \n");
         // Clear the store
-        result = await storage.clear();
+        await storage.clear();
         result = await storage.getAllKeysValues();
         if (result.length !== 0) {
           log.value = log.value.concat(" > clear failed \n");
@@ -167,10 +166,13 @@ export default defineComponent({
         log.value = log.value.concat(" > clear successful \n");
 
         log.value = log.value.concat("**** Ending Test SQLite Store ****\n");
+      } catch (err) {
+          log.value = log.value.concat(`Error: ${err} \n`);
+            return { log };
       }
     }
     testSQLiteStore();
-    return {log};
+    return {log, router};
   }
 
 });

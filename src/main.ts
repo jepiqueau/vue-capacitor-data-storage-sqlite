@@ -26,20 +26,12 @@ import './theme/variables.css';
 
 import { useStorageSQLite } from 'vue-data-storage-sqlite-hook/dist';
 
-// StorageSQLite Hook  
-const { openStore, getItem, setItem, getAllKeys, getAllValues,
-  getAllKeysValues, isKey, removeItem,
-  clear, setTable, isAvailable} = useStorageSQLite();
-
 const app = createApp(App)
   .use(IonicVue)
   .use(router);
   
 // Singleton StorageSQLite Hook  
-app.config.globalProperties.$storage = {
-  openStore: openStore, getItem: getItem, setItem: setItem, getAllKeys: getAllKeys,
-  getAllValues: getAllValues, getAllKeysValues: getAllKeysValues, isKey: isKey,
-  removeItem: removeItem,clear: clear, setTable: setTable, isAvailable:isAvailable};
+app.config.globalProperties.$storage = useStorageSQLite();
   
   
 router.isReady().then(() => {

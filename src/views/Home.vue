@@ -29,7 +29,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar, IonButton } from '@ionic/vue';
 import { defineComponent } from 'vue';
 import { useRouter } from 'vue-router';
-import { Plugins } from "@capacitor/core";
+import { Dialog } from '@capacitor/dialog';
+import { Toast } from '@capacitor/toast';
 
 export default defineComponent({
   name: 'Home',
@@ -43,7 +44,6 @@ export default defineComponent({
   },
   setup() {
       const router = useRouter()
-      const { Toast, Modals } = Plugins;
 
       const goToAbout = () => {
           router.push({
@@ -51,7 +51,7 @@ export default defineComponent({
           });
       };
       const showDialogAlert = async () => {
-        await Modals.alert({
+        await Dialog.alert({
           title: "Alert",
           message: "This is an alert message."
         });
@@ -59,7 +59,8 @@ export default defineComponent({
       const showToast = async () => {
         await Toast.show({
           text: "Hello from Capacitor!",
-          duration: "short"
+          duration: 'short',
+          position: 'top'
         });
       };
       const testStore = () => {

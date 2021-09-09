@@ -3,15 +3,15 @@
     <ion-header :translucent="true">
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-back-button default-href="/home"></ion-back-button>
+          <ion-button @click="() => router.push('/home')">back</ion-button>
         </ion-buttons>
-        <ion-title>SQLiteStore Test</ion-title>
+        <ion-title>Test Issue1</ion-title>
       </ion-toolbar>
     </ion-header>
     <ion-content :fullscreen="true">
       <ion-header collapse="condense">
         <ion-toolbar>
-          <ion-title size="large">SQLiteStore Test</ion-title>
+          <ion-title size="large">Test Issue1</ion-title>
         </ion-toolbar>
       </ion-header>
       <ion-card>
@@ -32,13 +32,14 @@ import {
   IonPage,
   IonTitle,
   IonToolbar,
-  IonBackButton,
   IonButtons,
   IonButton,
   IonCard,
   IonCardContent,
 } from "@ionic/vue";
 import { defineComponent, getCurrentInstance } from "vue";
+import { useRouter } from 'vue-router';
+
 export default defineComponent({
   name: "TestIssue1",
   components: {
@@ -47,7 +48,6 @@ export default defineComponent({
     IonPage,
     IonTitle,
     IonToolbar,
-    IonBackButton,
     IonButtons,
     IonButton,
     IonCard,
@@ -56,35 +56,13 @@ export default defineComponent({
   setup() {
     const app = getCurrentInstance();
     const storage = app?.appContext.config.globalProperties.$storage;
-/*    const showTesting = async () => {
-      const resOpen = await storage.openStore({});
-      if (!resOpen) {
-        console.log(" > Error \n");
-        return;
-      } else {
-        // Store Json Object
-        const data = { a: 20, b: "Hello World", c: { c1: 40, c2: "cool" } };
-        await storage.setItem("testJson", JSON.stringify(data));
-        const result = await storage.getItem("testJson");
-        if (result !== JSON.stringify(data)) {
-          console.log(" > SetItem/GetItem Json Object failed \n");
-          return;
-        }
-        console.log(" > SetItem/GetItem Json Object successful \n");
-      }
-
-    };
-    return {showTesting};
-    */
-   return {storage};
+    const router = useRouter();
+   return {storage, router};
   },
   methods: {
     async showTesting(storage) {
-      const resOpen = await storage.openStore({});
-      if (!resOpen) {
-        console.log(" > Error \n");
-        return;
-      } else {
+      try {
+        await storage.openStore({});
         // Store Json Object
         const data = { a: 20, b: "Hello World", c: { c1: 40, c2: "cool" } };
         await storage.setItem("testJson", JSON.stringify(data));
@@ -94,6 +72,9 @@ export default defineComponent({
           return;
         }
         console.log(" > SetItem/GetItem Json Object successful \n");
+        return;
+      } catch (err) {
+        console.log(` >  Error: ${err.message} \n`);
       }
     },
   },
